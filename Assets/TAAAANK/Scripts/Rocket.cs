@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Rocket : MonoBehaviour
+public class Rocket : Ammo
 {
     [SerializeField] GameObject effect;
     Rigidbody rb = null;
@@ -21,7 +21,16 @@ public class Rocket : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         print($"{collision.gameObject.name} is touching you vro...");
-        Destroy(gameObject);
+        if (!CompareTag("Player"))
+        {
+            Health health = collision.gameObject.GetComponent<Health>();
+            if (health != null)
+            {
+                health.OnDamage(damage);
+            }
         Instantiate(effect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+
+        }
     }
 }
