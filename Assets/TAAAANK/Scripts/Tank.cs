@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Tank : MonoBehaviour
 {
@@ -8,8 +9,11 @@ public class Tank : MonoBehaviour
 
     [SerializeField] GameObject ammo;
     [SerializeField] GameObject muzzle;
+    [SerializeField] Slider healthBar;
     InputAction moveAction;
     InputAction attackAction;
+
+    Health health;
 
     void Start()
     {
@@ -19,6 +23,7 @@ public class Tank : MonoBehaviour
 
         attackAction.started +=  ctx => OnAttack();
 
+        health = GetComponent<Health>();
     }
 
     void Update()
@@ -42,12 +47,9 @@ public class Tank : MonoBehaviour
         // rotate the tank, around the up axis (y-axis)
         transform.Rotate(Vector3.up * rotation * rotationSpeed * Time.deltaTime);
 
-        // check if "Fire" key is pressed, if so instantiate the ammo (rocket)
-        // ammo is instantiate at the muzzle position and rotation
-        //if (attackAction.WasPressedThisFrame())
-        //{
-        //    Instantiate(ammo, muzzle.transform.position, muzzle.transform.rotation);
-        //}
+      
+
+        healthBar.value = health.CurrentHealthPercentage;
     }
 
     void OnAttack()

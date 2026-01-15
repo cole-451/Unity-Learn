@@ -6,8 +6,20 @@ public class Health : MonoBehaviour
     [SerializeField] float maxHealth = 10;
     [SerializeField] GameObject hitEffect;
     [SerializeField] GameObject destroyEffect;
+    float health;
 
-    public float HP { get; set; }
+    public float HP {
+
+        get { return health; }
+
+
+        set { health = Mathf.Clamp(value, 0, maxHealth); } }
+
+    public float CurrentHealthPercentage
+    {
+        get { return HP / maxHealth; }
+
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private bool destroyed = false;
@@ -35,11 +47,16 @@ public class Health : MonoBehaviour
         }
         if (destroyed)
         {
+            TankGameManager.Instance.Score += 100;
             if(destroyEffect != null)
             {
                 Instantiate(destroyEffect, transform.position, Quaternion.identity);
             }
             Destroy(gameObject);
         }
+    }
+    public void OnHeal(float amount)
+    {
+        HP += amount;
     }
 }
