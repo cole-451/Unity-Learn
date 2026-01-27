@@ -1,5 +1,7 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TankGameManager : MonoBehaviour
 {
@@ -38,5 +40,15 @@ public class TankGameManager : MonoBehaviour
     {
         Time.timeScale = 0.0f;
         
+    }
+    public void OnGameOver()
+    {
+        StartCoroutine(ResetGameCR(2.0f));
+    }
+
+    IEnumerator ResetGameCR(float time)
+    {
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

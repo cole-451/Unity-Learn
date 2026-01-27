@@ -21,7 +21,8 @@ public class Projectile : Ammo
     private void OnCollisionEnter(Collision collision)
     {
         print($"{collision.gameObject.name} is touching you vro...");
-        if (!CompareTag("Player"))
+       // if (!CompareTag("Player"))
+       
         {
             Health health = collision.gameObject.GetComponent<Health>();
             if (health != null)

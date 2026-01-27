@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] float maxHealth = 10;
     [SerializeField] GameObject hitEffect;
     [SerializeField] GameObject destroyEffect;
+    [SerializeField] UnityEvent destroyEvent;
     float health;
 
     public float HP {
@@ -52,6 +54,7 @@ public class Health : MonoBehaviour
             {
                 Instantiate(destroyEffect, transform.position, Quaternion.identity);
             }
+            destroyEvent?.Invoke();
             Destroy(gameObject);
         }
     }
